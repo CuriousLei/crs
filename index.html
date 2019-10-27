@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>登录页</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
-<body>
-$END$
+<body class="layui-layout-body" style="background-color: #23262E;padding-top: 15%">
+<div class="layui-card" style="height: 250px;width: 350px;background-color: #FBFBFB;margin: 0 auto; position: relative;top: 50%;">
+    <div class="layui-card-header" style="text-align: center">login</div>
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" lay-verify="pass" autocomplete="off" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="login">登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="layui/layui.js"></script>
+<script>
+    // $("#loginVerify").click(function(){
+    //     console.log($("input[name='username']"))
+    //     // if($("input[name='username']")=="leida" && $("input[name='password']")=="123456"){
+    //     //     window.open('userRoomInfoView.html');
+    //     // }
+    //     //window.open('userRoomInfoView.html');
+    // });
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+
+        //监听提交
+        form.on('submit(login)', function(data){
+            // layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // })
+            console.log(data.field)
+            if(data.field['username']=='leida'&&data.field['password']=='123456'){
+                window.open('userRoomInfoView.html');
+            }
+            return false;
+        });
+
+
+    });
+</script>
 </body>
 </html>
