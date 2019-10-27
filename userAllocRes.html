@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>普通用户-会议室信息查看</title>
+    <title>普通用户-查看分配结果</title>
     <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
@@ -30,9 +30,9 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-this"><a href="">查看会议室</a></li>
+                <li class="layui-nav-item "><a href="userRoomInfoView.html">查看会议室</a></li>
                 <li class="layui-nav-item"><a href="userRoomApply.html">申请会议室</a></li>
-                <li class="layui-nav-item"><a href="userAllocRes.html">查看分配结果</a></li>
+                <li class="layui-nav-item layui-this"><a href="userAllocRes.html">查看分配结果</a></li>
                 <li class="layui-nav-item"><a href="userRoomContri.html">贡献会议室</a></li>
             </ul>
         </div>
@@ -41,7 +41,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <table class="layui-hide" id="tb"></table>
+
         </div>
     </div>
 
@@ -54,47 +54,7 @@
 <script src="layui/layui.js"></script>
 <script>
     //JavaScript代码区域
-    layui.use('table', function(){
-        var table = layui.table;
 
-        table.render({
-            elem: '#tb'
-            //,url:'/demo/table/user/'
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[ //标题栏
-                {field: 'name', title: '教室名称', width: 120}
-                ,{field: 'capability', title: '容纳人数', minWidth: 150, sort: true}
-                ,{field: 'state', title: '教室状态', minWidth: 120}
-                ,{field: 'description', title: '描述', minWidth: 120}
-            ]]
-            ,data: [{
-                "name": "3-233"
-                ,"capability": "200"
-                ,"state": "空闲"
-                ,"description": "多媒体"
-            }, {
-                "name": "3-233"
-                ,"capability": "200"
-                ,"state": "空闲"
-                ,"description": "多媒体"
-            }, {
-                "name": "3-233"
-                ,"capability": "200"
-                ,"state": "空闲"
-                ,"description": "多媒体"
-            }, {
-                "name": "3-233"
-                ,"capability": "200"
-                ,"state": "空闲"
-                ,"description": "多媒体"
-            }, {
-                "name": "3-233"
-                ,"capability": "200"
-                ,"state": "空闲"
-                ,"description": "多媒体"
-            }]
-        });
-    });
 </script>
 </body>
 </html>
