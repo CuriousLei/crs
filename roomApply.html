@@ -2,9 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>申请会议室表单</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
-<body>
-$END$
+<body style="padding: 10px">
+<form class="layui-form" action="">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参会人数</label>
+        <div class="layui-input-block">
+            <input type="text" name="number"  autocomplete="off" placeholder="请输入参会人数" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会议日期</label>
+        <div class="layui-input-block">
+            <input type="text" name="date"  autocomplete="off" placeholder="请输入会议日期" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会议时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="time"  autocomplete="off" placeholder="请输入会议时间" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <button type="button" class="layui-btn layui-btn-primary" id="chooseFile">选择文件</button>
+            <button type="button" class="layui-btn layui-btn-primary" id="uploadFile">开始上传</button>
+
+        </div>
+        <label style="width: 200px" class="layui-form-label">支持扩展名：.xls .xlsx</label>
+    </div>
+
+    <div class="layui-form-item" style="text-align: center">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">提交申请</button>
+    </div>
+</form>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="layui/layui.js"></script>
+<script>
+    //获取url字段，本页面暂时用不到
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+
+        //监听提交
+        form.on('submit(login)', function(data){
+            // layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // })
+            console.log(data.field)
+
+            return false;
+        });
+
+
+    });
+</script>
 </body>
 </html>
