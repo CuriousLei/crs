@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员-签到信息管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">会议室信息共享系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    老总
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="../index.html">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="adminStatistic.html">统计信息</a></li>
+                <li class="layui-nav-item"><a href="adminAllocManage.html">分配管理</a></li>
+                <li class="layui-nav-item"><a href="adminSourceManage.html">资源管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="">签到管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div style="padding: 20px; background-color: #F2F2F2;">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>会议：</span>
+                                <span>学习经验交流会</span>
+                            </div>
+                            <div class="layui-card-body">
+                                <div>地点：3-233</div>
+                                <div>日期：2019-10-23</div>
+                                <div>时间：19:00-21:00</div>
+                                <div>负责人：网络技术研究院</div>
+                            </div>
+                            <div class="layui-card-header">
+                                <a href="checkInfo.html">查看签到情况</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span>会议：</span>
+                                <span>学习经验交流会</span>
+                            </div>
+                            <div class="layui-card-body">
+                                <div>地点：3-236</div>
+                                <div>日期：2019-10-23</div>
+                                <div>时间：19:00-21:00</div>
+                                <div>负责人：计算机学院</div>
+                            </div>
+                            <div class="layui-card-header">
+                                <a href="checkInfo.html">查看签到情况</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../layui/layui.js"></script>
+<script>
+
+</script>
+</body>
+</html>
+</body>
+</html>

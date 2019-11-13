@@ -50,6 +50,8 @@
             console.log(data.field)
             if(data.field['username']=='leida'&&data.field['password']=='123456'){
                 window.open('userRoomInfoView.html');
+            }else if(data.field['username']=='admin'&&data.field['password']=='admin'){
+                window.open('admin/adminStatistic.html');
             }
             return false;
         });
