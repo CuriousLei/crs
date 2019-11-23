@@ -68,13 +68,63 @@
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
-    //批量申请会议室
+    function batchApply() {
+        layer.open({
+            type: 2 //此处以iframe举例
+            , title: '批量申请会议室'
+            , area: ['390px', '220px']
+            , shade: 0
+            , maxmin: true
+// ,offset: [ //为了演示，随机坐标
+//     Math.random()*($(window).height()-300)
+//     ,Math.random()*($(window).width()-390)
+// ]
+            , content: 'batchRoomApply.html'
+// ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+// ,yes: function(){
+//     $(that).click();
+// }
+// ,btn2: function(){
+//     layer.closeAll();
+// }
+//
+// ,zIndex: layer.zIndex //重点1
+// ,success: function(layero){
+//     layer.setTop(layero); //重点2
+// }
+        });
+    }   //批量申请会议室
 
 </script>
 
 <script>
     //批量添加会议室
-
+    function batchContri() {
+        layer.open({
+            type: 2 //此处以iframe举例
+            , title: '批量添加会议室'
+            , area: ['390px', '220px']
+            , shade: 0
+            , maxmin: true
+// ,offset: [ //为了演示，随机坐标
+//     Math.random()*($(window).height()-300)
+//     ,Math.random()*($(window).width()-390)
+// ]
+            , content: 'batchRoomContri.html'
+// ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+// ,yes: function(){
+//     $(that).click();
+// }
+// ,btn2: function(){
+//     layer.closeAll();
+// }
+//
+// ,zIndex: layer.zIndex //重点1
+// ,success: function(layero){
+//     layer.setTop(layero); //重点2
+// }
+        });
+    }
 </script>
 
 <script>
@@ -90,7 +140,7 @@
 //     Math.random()*($(window).height()-300)
 //     ,Math.random()*($(window).width()-390)
 // ]
-            , content: '../roomContri.html'
+            , content: 'roomContri.html'
 // ,btn: ['继续弹出', '全部关闭'] //只是为了演示
 // ,yes: function(){
 //     $(that).click();
@@ -204,17 +254,6 @@
             }
         });
     });
-</script>
-<script>
-    function setFormValue(data, layer, index) {
-    popForm.val("formTestFilter", {
-        "name": data.name
-        , "description": data.description
-        , "capability": data.capability
-    });
-    popForm.render(null, 'formTestFilter');
-    layer.close(index);
-}
 </script>
 </body>
 </html>
