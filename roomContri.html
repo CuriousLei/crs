@@ -6,29 +6,29 @@
     <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body style="padding: 10px">
-<form class="layui-form" action="">
+<form class="layui-form" action="" lay-filter="formTestFilter">
 
     <div class="layui-form-item">
         <label class="layui-form-label">会议室名称</label>
         <div class="layui-input-block">
-            <input type="text" name="number"  autocomplete="off" placeholder="请输入会议室名称" class="layui-input">
+            <input id="name" type="text" name="number"  autocomplete="off" placeholder="请输入会议室名称" class="layui-input" lay-filter="name">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">会议室功能</label>
         <div class="layui-input-block">
-            <input type="text" name="date"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input">
+            <input id="capability" type="text" name="date"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input" lay-filter="description">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">会议室容量</label>
         <div class="layui-input-block">
-            <input type="text" name="time"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input">
+            <input id="description" type="text" name="time"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input" lay-filter="capability">
         </div>
     </div>
 
     <div class="layui-form-item" style="text-align: center">
-        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">提交申请</button>
+        <button id="confirm" type="submit" class="pass layui-btn" lay-submit="" lay-filter="submit">提交申请</button>
     </div>
 </form>
 <script src="js/jquery-3.4.1.min.js"></script>
