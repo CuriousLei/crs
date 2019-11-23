@@ -42,7 +42,24 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
+            <!-- 贡献会议室 -->
+            <div class="layui-row" style="height: 40px; text-align: right;">
+                <a class="layui-btn layui-btn-lg"  onclick="batchApply()">批量申请会议室</a>
+                <a class="layui-btn layui-btn-lg"  onclick="batchContri()">批量添加会议室</a>
+                <a class="layui-btn layui-btn-lg"  onclick="contribution()">添加会议室</a>
+            </div>
 
+            <!-- 以贡献会议室table -->
+            <hr class="layui-bg-green" style="height: 5px">
+            <div class="layui-row" style="height: 40px">
+                <i class="layui-icon" style="font-size: 30px; color: #009f95;">以贡献会议室</i>
+            </div>
+            <div>
+                <table class="layui-hide" id="tb" lay-filter="event"></table>
+                <script type="text/html" id="bar">
+                    <a class="layui-btn layui-btn-xs" lay-event="modification">修改信息</a>
+                </script>
+            </div>
 
         </div>
     </div>
@@ -51,9 +68,155 @@
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
+    //批量申请会议室
 
 </script>
-</body>
-</html>
+
+<script>
+    //批量添加会议室
+
+</script>
+
+<script>
+    //贡献会议室事件
+    function contribution() {
+        layer.open({
+            type: 2 //此处以iframe举例
+            , title: '添加会议室'
+            , area: ['390px', '280px']
+            , shade: 0
+            , maxmin: true
+// ,offset: [ //为了演示，随机坐标
+//     Math.random()*($(window).height()-300)
+//     ,Math.random()*($(window).width()-390)
+// ]
+            , content: '../roomContri.html'
+// ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+// ,yes: function(){
+//     $(that).click();
+// }
+// ,btn2: function(){
+//     layer.closeAll();
+// }
+//
+// ,zIndex: layer.zIndex //重点1
+// ,success: function(layero){
+//     layer.setTop(layero); //重点2
+// }
+        });
+    }
+</script>
+
+<script>
+    //JavaScript代码区域
+    var popForm;
+    layui.use('table', function(){
+        var table = layui.table;
+        popForm = layui.form;
+        table.render({
+            elem: '#tb'
+            //,url:'/demo/table/user/'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[ //标题栏
+                {field: 'name', title: '教室名称', width: 120}
+                ,{field: 'capability', title: '容纳人数', minWidth: 150, sort: true}
+                ,{field: 'state', title: '教室状态', minWidth: 120}
+                ,{field: 'description', title: '描述', minWidth: 120}
+                ,{fixed: 'right', title:'操作', width:178, align:'center', toolbar: '#bar'}
+            ]]
+            ,data: [{
+                "name": "3-233"
+                ,"capability": "200"
+                ,"state": "空闲"
+                ,"description": "多媒体"
+            }, {
+                "name": "3-233"
+                ,"capability": "200"
+                ,"state": "空闲"
+                ,"description": "多媒体"
+            }, {
+                "name": "3-233"
+                ,"capability": "200"
+                ,"state": "空闲"
+                ,"description": "多媒体"
+            }, {
+                "name": "3-233"
+                ,"capability": "200"
+                ,"state": "空闲"
+                ,"description": "多媒体"
+            }, {
+                "name": "3-233"
+                ,"capability": "200"
+                ,"state": "空闲"
+                ,"description": "多媒体"
+            }]
+        });
+        table.on('tool(event)', function(obj){
+            var data = obj.data;
+            var newName ="null";
+            var newCapability = 0;
+            var newDescription = "null";
+            //修改数据
+            if(obj.event === "modification") {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '修改会议室信息'
+                        , area: ['390px', '280px']
+                        , shade: 0
+                        , maxmin: true
+// ,offset: [ //为了演示，随机坐标
+//     Math.random()*($(window).height()-300)
+//     ,Math.random()*($(window).width()-390)
+// ]
+                        , content: '../roomContri.html'
+// ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+// ,yes: function(){
+//     $(that).click();
+// }
+// ,btn2: function(){
+//     layer.closeAll();
+// }
+//
+// ,zIndex: layer.zIndex //重点1
+                        ,success: function(layero, index){
+                            //var iframeWin = window[layero.find('iframe')[0]['name']];
+                            var body = layer.getChildFrame('body', index);
+                            var btn = body.find('#submit');
+                            btn.bind('click', function () {
+                            newName = body.find('#name').value.toString();
+                            newCapability = parseInt(body.find('#capability').value);
+                            newDescription = body.find('#description').value.toString();
+
+                            console.log(newName);
+                            console.log(newCapability);
+                            console.log(newDescription);
+                             layer.close(index);
+                             });
+                            //setFormValue(data, layer, index);
+                        }
+//     layer.setTop(layero); //重点2
+// }
+                    });
+
+                obj.update({
+                    name: newName
+                    , description: newDescription
+                    , capability: newCapability
+                });
+            }
+        });
+    });
+</script>
+<script>
+    function setFormValue(data, layer, index) {
+    popForm.val("formTestFilter", {
+        "name": data.name
+        , "description": data.description
+        , "capability": data.capability
+    });
+    popForm.render(null, 'formTestFilter');
+    layer.close(index);
+}
+</script>
 </body>
 </html>
