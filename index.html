@@ -26,7 +26,7 @@
                 <button type="button" class="layui-btn" id="login" >登录</button>
             </div>
         </form>
-        <button id="test">测试</button>
+<!--        <button id="test">测试</button>-->
     </div>
 </div>
 <script src="js/jquery-3.4.1.min.js"></script>
@@ -50,16 +50,16 @@
             ,layer = layui.layer,$=layui.jquery;
 
         //监听提交
-        form.on('submit(login)', function(data){
-            // layer.alert(JSON.stringify(data.field), {
-            //     title: '最终的提交信息'
-            // })
-            console.log(data.field)
-
-            sleep(10000);
-
-            // return false;
-        });
+        // form.on('submit(login)', function(data){
+        //     // layer.alert(JSON.stringify(data.field), {
+        //     //     title: '最终的提交信息'
+        //     // })
+        //     console.log(data.field)
+        //
+        //     sleep(10000);
+        //
+        //     // return false;
+        // });
 
         $("#login").click(function () {
             var dt={
@@ -72,48 +72,6 @@
                 url:"http://10.28.230.26:8080/login",
                 data:JSON.stringify(dt),
                 contentType: "application/json",
-                error : function(request) {
-                    layer.alert('操作失败', {
-                        icon: 2,
-                        title:"提示"
-                    });
-                },
-                success : function(ret) {
-                    console.log("logintest",ret)
-                    if(ret.status==0){
-                        if(ret.data['user_role']=="user"){
-                            window.open('userRoomInfoView.html');
-                        }else{
-                            window.open('admin/adminStatistic.html');
-                        }
-                    }
-                }
-            })
-        })
-
-        $("#test").click(function () {
-            var dt={
-                "userName":"leida",
-                "userPasswd":"123456"
-            }
-            var ds={
-                userName:"leida",
-                userPasswd:"123456"
-            }
-            $=layui.jquery;
-            var dd=new FormData($("#form")[0])
-            console.log(dt);
-            console.log(dd);
-            $.ajax({
-                type:"post",
-                url:"http://localhost:8080/testFrom",
-                //data:JSON.stringify(ds),
-                data:dt,
-                //data:dd,
-                //contentType: "application/json",
-                //contentType: "application/form-data",
-                contentType: "application/x-www-form-urlencoded",
-                //processData: false,
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,
