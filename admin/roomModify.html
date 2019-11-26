@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>添加会议室表单</title>
+    <title>修改会议室表单</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 <body style="padding: 10px">
@@ -56,22 +56,20 @@
             console.log(data.field)
             var formdata = new FormData($("#form")[0]);
             console.log(formdata);
-            console.log(formdata.get('room_name'));
-            // var dt={
-            //     "num":200,
-            //     "date":"20191121",
-            //     "span":"19002100"
-            // }
-
+            var temp_room_name = formdata.get('room_name');
+            var dt={
+                "room_name":$("input[name='room_name']").val(),
+                "room_desc":$("input[name='room_descriptin']").val(),
+                "room_nums":$("input[name='room_capability']").val()
+            }
             $.ajax({
-
-                type : "post",
-                url : "http://localhost:8080/roomInfo",
+                type : "put",
+                url : "http://localhost:8080/roomInfo" + temp_room_name,//+roomId,不会获取表格中的信息,(在adminSourceManage界面中)
                 async : false,
-                data : formdata, // 你的formid
-                dataType: "json",
+                data : JSON.stringify(dt), // 你的formid
+                // dataType: "json",
                 //contentType: 'application/x-www-form-urlencoded', //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
-                contentType:false,
+                contentType: "application/json",
                 processData: false, //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
                 error : function(request) {
                     layer.alert('操作失败', {
@@ -80,7 +78,7 @@
                     });
                 },
                 success : function(ret) {
-                    console.log(ret)
+                    window.open('adminSourceManage.html');
                 }
             })
 
