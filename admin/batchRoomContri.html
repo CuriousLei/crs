@@ -37,7 +37,7 @@
     </div>
 
     <div class="layui-form-item" style="text-align: center">
-        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitApply">提交申请</button>
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitBatchContri">提交申请</button>
     </div>
 </form>
 <script src="../js/jquery-3.4.1.min.js"></script>
@@ -55,23 +55,17 @@
             ,upload = layui.upload,$=layui.jquery;
 
         //监听提交
-        form.on('submit(submitApply)', function(data){
+        form.on('submit(submitBatchContri)', function(data){
             // layer.alert(JSON.stringify(data.field), {
             //     title: '最终的提交信息'
             // })
             console.log(data.field)
             var formdata = new FormData($("#form")[0]);
             console.log(formdata);
-            console.log(formdata.get('confer_date'));
-            // var dt={
-            //     "num":200,
-            //     "date":"20191121",
-            //     "span":"19002100"
-            // }
 
             $.ajax({
                 type : "post",
-                url : "http://localhost:8080/roomInfoApply2",
+                url : "http://localhost:8080/conferBatchApply",
                 async : false,
                 data : formdata, // 你的formid
                 // dataType: "json",

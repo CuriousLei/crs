@@ -11,24 +11,24 @@
     <div class="layui-form-item">
         <label class="layui-form-label">会议室名称</label>
         <div class="layui-input-block">
-            <input id="name" type="text" name="number"  autocomplete="off" placeholder="请输入会议室名称" class="layui-input" lay-filter="name">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">会议室功能</label>
-        <div class="layui-input-block">
-            <input id="capability" type="text" name="date"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input" lay-filter="description">
+            <input id="room_name" type="text" name="room_name"  autocomplete="off" placeholder="请输入会议室名称" class="layui-input" lay-filter="room_name">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">会议室容量</label>
         <div class="layui-input-block">
-            <input id="description" type="text" name="time"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input" lay-filter="capability">
+            <input id="room_capability" type="text" name="room_capability"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input" lay-filter="room_capability">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会议室功能</label>
+        <div class="layui-input-block">
+            <input id="room_description" type="text" name="room_description"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input" lay-filter="room_description">
         </div>
     </div>
 
     <div class="layui-form-item" style="text-align: center">
-        <button id="confirm" type="submit" class="pass layui-btn" lay-submit="" lay-filter="submit">提交申请</button>
+        <button id="confirm" type="submit" class="pass layui-btn" lay-submit="" lay-filter="confirm">提交申请</button>
     </div>
 </form>
 <script src="../js/jquery-3.4.1.min.js"></script>
@@ -39,18 +39,49 @@
     {
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
+        if(r!=null)return  unescape(decodeURI(r[2])); return null;
     }
-    layui.use(['form'], function(){
-        var form = layui.form
-            ,layer = layui.layer;
+    layui.use(['form', 'upload'], function(){
+        var form = layui.form,
+            upload = layui.upload, $= layui.jquery;
 
         //监听提交
-        form.on('submit(login)', function(data){
+        form.on('submit(confirm)', function(data){
+            // layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // })
             // layer.alert(JSON.stringify(data.field), {
             //     title: '最终的提交信息'
             // })
             console.log(data.field)
+            var formdata = new FormData($("#form")[0]);
+            console.log(formdata);
+            console.log(formdata.get('room_name'));
+            // var dt={
+            //     "num":200,
+            //     "date":"20191121",
+            //     "span":"19002100"
+            // }
+
+            $.ajax({
+                type : "post",
+                url : "http://localhost:8080/roomInfo",
+                async : false,
+                data : formdata, // 你的formid
+                // dataType: "json",
+                //contentType: 'application/x-www-form-urlencoded', //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                contentType:false,
+                processData: false, //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+                error : function(request) {
+                    layer.alert('操作失败', {
+                        icon: 2,
+                        title:"提示"
+                    });
+                },
+                success : function(ret) {
+                    console.log(ret)
+                }
+            })
 
             return false;
         });
