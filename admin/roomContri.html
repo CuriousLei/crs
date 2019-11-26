@@ -39,8 +39,13 @@
     {
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
+        if(r!=null)return  unescape(decodeURI(r[2])); return null;
     }
+    $(function(){
+        $("#name").attr("value", GetQueryString('name'));
+        $("#capability").attr("value", GetQueryString('capability'));
+        $("#description").attr("value", GetQueryString('description'));
+    });
     layui.use(['form'], function(){
         var form = layui.form
             ,layer = layui.layer;

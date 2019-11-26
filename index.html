@@ -106,14 +106,14 @@
             console.log(dd);
             $.ajax({
                 type:"post",
-                url:"http://localhost:8080/testForm",
+                url:"http://localhost:8080/testFrom",
                 //data:JSON.stringify(ds),
-                //data:dt,
-                data:dd,
+                data:dt,
+                //data:dd,
                 //contentType: "application/json",
-                contentType: "application/form-data",
-                //contentType: "application/x-www-form-urlencoded",
-                processData: false,
+                //contentType: "application/form-data",
+                contentType: "application/x-www-form-urlencoded",
+                //processData: false,
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,
