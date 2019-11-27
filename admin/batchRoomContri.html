@@ -7,31 +7,11 @@
 </head>
 <body style="padding: 10px">
 <form class="layui-form" action="" id="form">
-<!--
-    <div class="layui-form-item">
-        <label class="layui-form-label">参会人数</label>
-        <div class="layui-input-block">
-            <input type="text" name="confer_num"  autocomplete="off" placeholder="请输入参会人数" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">会议日期</label>
-        <div class="layui-input-block">
-            <input type="text" name="confer_date"  autocomplete="off" placeholder="请输入会议日期" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">会议时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="confer_span"  autocomplete="off" placeholder="请输入会议时间" class="layui-input">
-        </div>
-    </div>
--->
+
     <div class="layui-form-item">
         <div class="layui-upload">
-<!--            <button type="button" class="layui-btn layui-btn-primary" id="chooseFile">选择文件</button>-->
-<!--            <button type="button" class="layui-btn layui-btn-primary" id="uploadFile">开始上传</button>-->
-            <input type="file"  name="uploadFile">
+
+            <input type="file"  name="file">
         </div>
         <label style="width: 200px" class="layui-form-label">支持扩展名：.xls .xlsx</label>
     </div>
@@ -56,16 +36,12 @@
 
         //监听提交
         form.on('submit(submitBatchContri)', function(data){
-            // layer.alert(JSON.stringify(data.field), {
-            //     title: '最终的提交信息'
-            // })
-            console.log(data.field)
+
             var formdata = new FormData($("#form")[0]);
-            console.log(formdata);
 
             $.ajax({
                 type : "post",
-                url : "http://localhost:8080/conferBatchApply",
+                url : "http://10.28.223.223:8080/rooms/roomInfoBatchAdd",
                 async : false,
                 data : formdata, // 你的formid
                 // dataType: "json",
@@ -80,6 +56,10 @@
                 },
                 success : function(ret) {
                     console.log(ret)
+                    if(ret.status==0){
+                        parent.location.reload()
+                    }
+
                 }
             })
             return false;

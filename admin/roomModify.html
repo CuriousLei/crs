@@ -17,13 +17,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">会议室容量</label>
         <div class="layui-input-block">
-            <input id="room_capability" type="text" name="room_capability"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input" lay-filter="room_capability">
+            <input id="room_capability" type="text" name="room_capability"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input" lay-filter="room_capability">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">会议室功能</label>
         <div class="layui-input-block">
-            <input id="room_description" type="text" name="room_description"  autocomplete="off" placeholder="请输入会议室容量" class="layui-input" lay-filter="room_description">
+            <input id="room_description" type="text" name="room_description"  autocomplete="off" placeholder="请输入会议室功能" class="layui-input" lay-filter="room_description">
         </div>
     </div>
 
@@ -42,9 +42,9 @@
         if(r!=null)return  unescape(decodeURI(r[2])); return null;
     }
     $(function(){
-        $("#room_name").attr("value", GetQueryString('name'));
-        $("#room_capability").attr("value", GetQueryString('capability'));
-        $("#room_description").attr("value", GetQueryString('description'));
+        $("#room_name").attr("value", GetQueryString('room_name'));
+        $("#room_capability").attr("value", GetQueryString('room_nums'));
+        $("#room_description").attr("value", GetQueryString('room_desc'));
     });
     layui.use(['form', 'upload'], function(){
         var form = layui.form,
@@ -61,21 +61,20 @@
             console.log(data.field)
             var formdata = new FormData($("#form")[0]);
             console.log(formdata);
-            var temp_room_name = formdata.get('room_name');
+            var room_id = GetQueryString('room_id');
             var dt={
                 "room_name":$("input[name='room_name']").val(),
-                "room_desc":$("input[name='room_descriptin']").val(),
+                "room_desc":$("input[name='room_description']").val(),
                 "room_nums":$("input[name='room_capability']").val()
             }
+            console.log('dt',dt)
             $.ajax({
                 type : "put",
-                url : "http://localhost:8080/roomInfo" + temp_room_name,//+roomId,不会获取表格中的信息,(在adminSourceManage界面中)
-                async : false,
+                url : "http://10.28.223.223:8080/rooms/roomInfo/" + room_id,//+roomId,不会获取表格中的信息,(在adminSourceManage界面中)
                 data : JSON.stringify(dt), // 你的formid
                 // dataType: "json",
                 //contentType: 'application/x-www-form-urlencoded', //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
                 contentType: "application/json",
-                processData: false, //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,
@@ -83,7 +82,10 @@
                     });
                 },
                 success : function(ret) {
-                    window.open('adminSourceManage.html');
+                    console.log('test',ret)
+                    if(ret.status==0){
+                        parent.location.reload()
+                    }
                 }
             })
 
