@@ -50,6 +50,7 @@
 <!--        © layui.com - 底部固定区域-->
 <!--    </div>-->
 </div>
+<script src="../js/main.js"></script>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
@@ -59,7 +60,7 @@
 
         $.ajax({
             type : "get",
-            url : "http://10.28.223.223:8080/rooms/roomInfo/page/0",
+            url : "http://"+ipAddr+"/rooms/roomInfo/page/0",
             error : function(request) {
                 layer.alert('操作失败', {
                     icon: 2,
