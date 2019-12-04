@@ -29,6 +29,7 @@
 <!--        <button id="test">测试</button>-->
     </div>
 </div>
+<script src="js/main.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="layui/layui.js"></script>
 <script>
@@ -45,6 +46,9 @@
             continue;
         }
     }
+    // $(function(){
+    //     console.log(ipAddr)
+    // });
     layui.use(['form'], function(){
         var form = layui.form
             ,layer = layui.layer,$=layui.jquery;
@@ -66,10 +70,11 @@
                 "userName":$("input[name='userName']").val(),
                 "userPasswd":$("input[name='userPasswd']").val()
             }
+
             console.log(dt);
             $.ajax({
                 type:"post",
-                url:"http://10.28.230.26:8080/login",
+                url:"http://"+ipAddr+"/users/login",
                 data:JSON.stringify(dt),
                 contentType: "application/json",
                 error : function(request) {

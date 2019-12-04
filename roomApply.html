@@ -51,6 +51,7 @@
         <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitApply">提交申请</button>
     </div>
 </form>
+<script src="js/main.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="layui/layui.js"></script>
 <script>
@@ -84,7 +85,7 @@
             $.ajax({
                 type : "post",
                 //url : "http://localhost:8080/roomInfoApply2",
-                url : "http://10.28.223.223:8080/records/roomInfoApply",
+                url : "http://"+ipAddr+"/records/roomInfoApply",
                 //async : false,
                 data : formdata, // 你的formid
                 // dataType: "json",
