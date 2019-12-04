@@ -31,6 +31,7 @@
         <button id="confirm" type="submit" class="pass layui-btn" lay-submit="" lay-filter="confirm">提交申请</button>
     </div>
 </form>
+<script src="../js/main.js"></script>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
@@ -70,7 +71,7 @@
             console.log('dt',dt)
             $.ajax({
                 type : "put",
-                url : "http://10.28.223.223:8080/rooms/roomInfo/" + room_id,//+roomId,不会获取表格中的信息,(在adminSourceManage界面中)
+                url : "http://"+ipAddr+"/rooms/roomInfo/" + room_id,//+roomId,不会获取表格中的信息,(在adminSourceManage界面中)
                 data : JSON.stringify(dt), // 你的formid
                 // dataType: "json",
                 //contentType: 'application/x-www-form-urlencoded', //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件

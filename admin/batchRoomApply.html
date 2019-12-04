@@ -19,6 +19,7 @@
         <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitBatchApply">提交申请</button>
     </div>
 </form>
+<script src="../js/main.js"></script>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
@@ -44,7 +45,7 @@
             console.log(formdata)
             $.ajax({
                 type : "post",
-                url : "http://10.28.223.223:8080/records/conferBatchApply",
+                url : "http://"+ipAddr+"/records/conferBatchApply",
                 //async : false,
                 data : formdata, // 你的formid
                 // dataType: "json",
