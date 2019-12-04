@@ -50,6 +50,7 @@
 <!--        © layui.com - 底部固定区域-->
 <!--    </div>-->
 </div>
+<script src="../js/main.js"></script>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui/layui.js"></script>
 <script>
@@ -57,6 +58,39 @@
     layui.use('table', function(){
         var table = layui.table;
 
+        $.ajax({
+            type : "get",
+            url : "http://"+ipAddr+"/rooms/roomInfo/page/0",
+            error : function(request) {
+                layer.alert('操作失败', {
+                    icon: 2,
+                    title:"提示"
+                });
+            },
+            success : function(ret) {
+                console.log(ret)
+                var tableData=ret.data;
+                console.log(tableData)
+                table.render({
+                    elem: '#tb'
+                    //,url:'/demo/table/user/'
+                    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                    ,cols: [[ //标题栏
+                        {field: 'room_name', title: '教室名称', width: 120}
+                        ,{field: 'room_nums', title: '容纳人数', minWidth: 150, sort: true}
+                        ,{field: 'room_desc', title: '描述', minWidth: 120}
+                        ,{field: 'room_status', title: '教室状态', minWidth: 120}
+                        ,{field: 'user_name', title: '申请人', minWidth: 120}
+                    ]]
+                    ,data: tableData
+                });
+            }
+        })
+
+
+    });
+
+    /*
         table.render({
             elem: '#tb'
             //,url:'/demo/table/user/'
@@ -77,6 +111,7 @@
             }]
         });
     });
+     */
 </script>
 </body>
 </html>
