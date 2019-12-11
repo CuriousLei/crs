@@ -60,6 +60,15 @@
                     <a class="layui-btn layui-btn-xs" lay-event="modification">修改信息</a>
                 </script>
             </div>
+            <div class="layui-row">
+                <label >总页数：</label><label id="pageSum"></label><label >&nbsp&nbsp&nbsp</label><label >当前页码：</label><label id="pageNow"></label>
+            </div>
+            <div class="layui-row">
+                <button type="button" class="layui-btn" id="firstPage">首页</button>
+                <button type="button" class="layui-btn" id="pre"><i class="layui-icon"></i></button>
+                <button type="button" class="layui-btn" id="next"><i class="layui-icon"></i></button>
+                <button type="button" class="layui-btn" id="lastPage">尾页</button>
+            </div>
 
         </div>
     </div>
@@ -105,11 +114,28 @@
     }
     var popForm;
     layui.use('table', function(){
-        var tableData=[];
         var table = layui.table;
+        var pageId=0;
+        var maxPage;
+        table.render({
+            elem: '#tb'
+            //,url:'/demo/table/user/'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[ //标题栏
+                {field: 'room_name', title: '教室名称', width: 120}
+                ,{field: 'room_nums', title: '容纳人数', minWidth: 150, sort: true}
+                ,{field: 'room_status', title: '教室状态', minWidth: 120}
+                ,{field: 'room_desc', title: '描述', minWidth: 120}
+                ,{fixed: 'right', title:'操作', width:178, align:'center', toolbar: '#bar'}
+            ]]
+            ,id: 'dataTable'
+            ,data: []
+        });
+
         $.ajax({
             type : "get",
-            url : "http://"+ipAddr+"/rooms/roomInfo/page/0",
+            //url : "http://"+ipAddr+"/rooms/roomInfo/page/0",
+            url : "http://"+ipAddr+"/rooms/roomInfoTotalPageNum",
             error : function(request) {
                 layer.alert('操作失败', {
                     icon: 2,
@@ -117,25 +143,57 @@
                 });
             },
             success : function(ret) {
-                console.log(ret)
-                tableData=ret.data;
-
-                console.log(tableData)
-                table.render({
-                    elem: '#tb'
-                    //,url:'/demo/table/user/'
-                    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                    ,cols: [[ //标题栏
-                        {field: 'room_name', title: '教室名称', width: 120}
-                        ,{field: 'room_nums', title: '容纳人数', minWidth: 150, sort: true}
-                        ,{field: 'room_status', title: '教室状态', minWidth: 120}
-                        ,{field: 'room_desc', title: '描述', minWidth: 120}
-                        ,{fixed: 'right', title:'操作', width:178, align:'center', toolbar: '#bar'}
-                    ]]
-                    ,data: tableData
-                });
+                maxPage=ret.data;
+                //console.log(maxPage)
+                //设置总页数
+                $("#pageSum").html(maxPage)
             }
-        })
+        });
+        //初始加载数据
+        updateData(pageId)
+        //查询首页
+        $("#firstPage").click(function () {
+            pageId=0;
+            updateData(pageId);
+        });
+        //查询前一页
+        $("#pre").click(function () {
+            pageId=pageId>0?(pageId-1):0;
+            updateData(pageId);
+        });
+        //查询下一页
+        $("#next").click(function () {
+            pageId=pageId<(maxPage-1)?(pageId+1):(maxPage-1);
+            updateData(pageId);
+        });
+        //查询最后一页
+        $("#lastPage").click(function () {
+            pageId=maxPage-1;
+            updateData(pageId);
+        });
+        //获取数据并更新表格
+        function updateData(page){
+            $.ajax({
+                type : "get",
+                url : "http://"+ipAddr+"/rooms/roomInfo/page/"+page,
+                error : function(request) {
+                    layer.alert('操作失败', {
+                        icon: 2,
+                        title:"提示"
+                    });
+                },
+                success : function(ret) {
+                    //console.log("searchtest",ret)
+                    // num=ret.num;
+                    // $("#allSum").html(ret.num)
+                    table.reload('dataTable', {
+                        data:ret.data
+                    });
+                    //设置当前页码
+                    $("#pageNow").html(page+1)
+                }
+            })
+        }
 
         table.on('tool(event)', function(obj){
             var data = obj.data;
@@ -162,6 +220,7 @@
                      */
             }
         });
+
     });
 </script>
 </body>
