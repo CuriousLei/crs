@@ -31,6 +31,7 @@
 </div>
 <script src="js/main.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 <script src="layui/layui.js"></script>
 <script>
     // $("#loginVerify").click(function(){
@@ -45,6 +46,14 @@
         while ((new Date()).getTime() - start < delay) {
             continue;
         }
+    }
+    function setCookie(){
+        Cookies.set('JSESSIONID','value',{
+            expires:7,
+            path:'/'
+            // domain:ipAddr,
+            // secure:false
+        })
     }
     // $(function(){
     //     console.log(ipAddr)
@@ -70,13 +79,21 @@
                 "userName":$("input[name='userName']").val(),
                 "userPasswd":$("input[name='userPasswd']").val()
             }
-
-            console.log(dt);
+            //Post("http://"+ipAddr+"/users/login",dt)
+            //console.log(dt);
             $.ajax({
                 type:"post",
                 url:"http://"+ipAddr+"/users/login",
                 data:JSON.stringify(dt),
                 contentType: "application/json",
+                // beforeSend: function(xhr) {
+                //     xhr.withCredentials = true;
+                // },
+                async:false,
+                xhrFields: {
+                    withCredentials: true
+                },//没有这个配置，无法将响应包中的set-cookie中的sessionid写入浏览器cookie
+                //crossDomain: true,
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,
@@ -84,17 +101,44 @@
                     });
                 },
                 success : function(ret) {
+
                     console.log("logintest",ret)
                     if(ret.status==0){
                         if(ret.data['user_role']=="user"){
                             window.open('userRoomInfoView.html');
                         }else{
-                            window.open('admin/adminStatistic.html');
+                            //setCookie()
+                            location.assign('admin/adminStatistic.html')
+                            //window.location.href="admin/adminStatistic.html";
+                            //window.open('admin/adminStatistic.html','_self');
                         }
                     }
                 }
+                // complete:function(xhr,data){
+                //     console.log(xhr.getResponseHeader('Set-Cookie'))
+                // }
             })
+            //window.open('admin/adminStatistic.html','_self');
         })
+        function Post(URL, PARAMTERS) {
+            //创建form表单
+            var temp_form = document.createElement("form");
+            temp_form.action = URL;
+            //如需打开新窗口，form的target属性要设置为'_blank'
+            temp_form.target = "_self";
+            temp_form.method = "post";
+            temp_form.style.display = "none";
+            //添加参数
+            for (var item in PARAMTERS) {
+                var opt = document.createElement("textarea");
+                opt.name = item;
+                opt.value = PARAMTERS[item];
+                temp_form.appendChild(opt);
+            }
+            document.body.appendChild(temp_form);
+            //提交数据
+            temp_form.submit();
+        }
     });
 </script>
 </body>

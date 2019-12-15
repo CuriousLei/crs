@@ -42,16 +42,242 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择年份</label>
+                    <div class="layui-input-inline">
+                        <select name="selectYear" lay-filter="yearChange">
+                            <option value="">请选择年份</option>
+                            <option value="2017" >2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019" selected="">2019</option>
+                        </select>
+                    </div>
+                 </div>
+            </form>
+            <div class="layui-tab layui-tab-brief" >
+                <ul class="layui-tab-title">
+                    <li class="layui-this">按月份</li>
+                    <li>按学院</li>
 
-
+                </ul>
+                <div class="layui-tab-content" style="height: 100px;">
+                    <div class="layui-tab-item layui-show" style="height:100%">
+                        <div id="chartByMonth" style="height: 500px;width: 1000px"></div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div id="chartByYear" style="margin: 0 auto">
+                            <div id="chartByCollege" style="height: 500px;width: 1000px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </div>
 <script src="../js/main.js"></script>
 <script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../echarts/dist/echarts.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>-->
 <script src="../layui/layui.js"></script>
-<script>
+<script type="text/javascript">
+    var monthChart;
+    var collegeChart;
+    $(function () {
+        histogramByMonth()
+        histogramByCollege()
+        updateGramByMonth(2018)
+        updateGramByCollege(2018)
+    });
+    layui.use(['element','form'], function(){
+        var $ = layui.jquery,form = layui.form
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //监听select
+        form.on('select(yearChange)', function(data){
+            console.log(data.value)
+        })
+    });
+    //echart初始化
+    function histogramByMonth(){
+        monthChart = echarts.init(document.getElementById('chartByMonth'));
+        var optionBar = {
+            title: {
+                text: '会议室借出记录按月份统计'
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                    label: {
+                        show: true,
+                        formatter: function (params) {
+                            return params.value;
+                        }
+                    }
+                }
+            },
+            legend: {
+                data: ['参会人数', '会议室数量']
+            },
+            grid: {
+                containLabel: true
+            },
+            xAxis: {
+                data: ['2019-5','2019-6','2019-7'],
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            },
+            dataZoom: [{
+                startValue: 0
+            }, {
+                type: 'inside'
+            }],
+            yAxis: {
+                type: 'value',
+                name: '数量'
+            },
+            series: [{
+                name: '参会人数',
+                type: 'bar',
+                data: [23,45,50],
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            },
+                {
+                    name: '会议室数量',
+                    type: 'bar',
+                    data:[10,20,21],
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                }],
+            animationEasing: 'elasticOut',
+            animationDelayUpdate: function (idx) {
+                return idx * 5;
+            }
+        };
+        monthChart.setOption(optionBar);
+    }
+
+    function histogramByCollege() {
+        collegeChart = echarts.init(document.getElementById('chartByCollege'));
+        var optionBar = {
+            //color:['#218103','#b0f899'],
+            title: {
+                text: '会议室借出数量按学院统计'
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                    label: {
+                        show: true,
+                        formatter: function (params) {
+                            return params.value;
+                        }
+                    }
+                }
+            },
+            legend: {
+                data: ['参会人数', '会议室数量']
+            },
+            grid: {
+                containLabel: true
+            },
+            xAxis: {
+                data: ['网研院','计算机院','信通院'],
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            },
+            dataZoom: [{
+                startValue: 0
+            }, {
+                type: 'inside'
+            }],
+            yAxis: {
+                type: 'value',
+                name: '数量'
+            },
+            series: [{
+                name: '参会人数',
+                type: 'bar',
+                data: [23,45,50],
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            },
+                {
+                    name: '会议室数量',
+                    type: 'bar',
+                    data:[10,20,21],
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                }],
+            animationEasing: 'elasticOut',
+            animationDelayUpdate: function (idx) {
+                return idx * 5;
+            }
+        };
+        collegeChart.setOption(optionBar);
+    }
+    //更新echart数据
+    function updateGramByMonth(year){
+        monthChart.setOption({
+            title:{
+                text: year+'-会议室借出记录按月份统计'
+            },
+            xAxis: {
+                data: ['2019-5','2019-6','2019-7','2019-8','2019-9','2019-10']
+            },
+            series : [
+                {
+                    data:[20,40,50,60,70,80]
+                },
+                {
+                    data: [2,4,5,6,7,8]
+                }
+            ]
+        });
+    }
+    function updateGramByCollege(year){
+        collegeChart.setOption({
+            title:{
+                text: year+'-会议室借出记录按学院统计'
+            },
+            xAxis: {
+                data: ['网研院','计算机院','信通院','电子院','自动化院','光电院']
+            },
+            series : [
+                {
+                    data:[20,40,50,60,70,80]
+                },
+                {
+                    data: [2,4,5,6,7,8]
+                }
+            ]
+        });
+    }
 
 </script>
 </body>

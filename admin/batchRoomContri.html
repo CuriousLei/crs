@@ -45,6 +45,9 @@
                 url : "http://"+ipAddr+"/rooms/roomInfoBatchAdd",
                 async : false,
                 data : formdata, // 你的formid
+                xhrFields: {
+                    withCredentials: true
+                },
                 // dataType: "json",
                 //contentType: 'application/x-www-form-urlencoded', //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
                 contentType:false,

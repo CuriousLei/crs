@@ -46,6 +46,9 @@
             $.ajax({
                 type : "post",
                 url : "http://"+ipAddr+"/records/conferBatchApply",
+                xhrFields: {
+                    withCredentials: true
+                },
                 //async : false,
                 data : formdata, // 你的formid
                 // dataType: "json",

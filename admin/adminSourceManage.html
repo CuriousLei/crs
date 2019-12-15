@@ -176,6 +176,9 @@
             $.ajax({
                 type : "get",
                 url : "http://"+ipAddr+"/rooms/roomInfo/page/"+page,
+                xhrFields: {
+                    withCredentials: true
+                },
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,

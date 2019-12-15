@@ -68,6 +68,7 @@
         var table = layui.table;
         var pageId=0;
         var maxPage;
+        console.log('sessionID',getSessionId());
         table.render({
             elem: '#tb'
             //,url:'/demo/table/user/'
@@ -86,6 +87,10 @@
             type : "get",
             //url : "http://"+ipAddr+"/rooms/roomInfo/page/0",
             url : "http://"+ipAddr+"/rooms/roomInfoTotalPageNum",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             error : function(request) {
                 layer.alert('操作失败', {
                     icon: 2,
@@ -125,7 +130,11 @@
         function updateData(page){
             $.ajax({
                 type : "get",
-                url : "http://"+ipAddr+"/rooms/roomInfo/page/"+page,
+                url : "http://"+ipAddr+"/records/applyResult/root/page/"+page,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 error : function(request) {
                     layer.alert('操作失败', {
                         icon: 2,
@@ -133,9 +142,8 @@
                     });
                 },
                 success : function(ret) {
-                    //console.log("searchtest",ret)
-                    // num=ret.num;
-                    // $("#allSum").html(ret.num)
+                    console.log("data",ret)
+
                     table.reload('dataTable', {
                         data:ret.data
                     });
